@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define MAX_VERT 50
 #define MAX_ARISTAS 100
-#define TAM_ARISTA 3
+#define TAM_ARISTA 2
 
 struct grafo
 {
@@ -18,16 +19,16 @@ int main(int argc, char const *argv[])
 {
     // esta parte puede que sea mejor agregarla con un .h
     grafo_g arbol = {
-        .vertices = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', '\0'},
-        .aristas = {"ab", "ac", "bd", "dh", "di", "ce", "cf", "cg", "gl", "fj", "fk", '\0'}};
+        .vertices = "abcdefghijkl",
+        .aristas = {{'a', 'b'}, {'a', 'c'}, {'b', 'd'}, {'d', 'h'}, {'d', 'i'}, {'c', 'e'}, {'c', 'f'}, {'c', 'g'}, {'g', 'l'}, {'f', 'j'}, {'f', 'k'}}};
 
     grafo_g planar = {
-        .vertices = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '\0'},
-        .aristas = {"ab", "ah", "bh", "bd", "bc", "cd", "di", "df", "de", "ef", "fi", "fh", "fg", "gh", '\0'}};
+        .vertices = "abcdefghi",
+        .aristas = {{'a', 'b'}, {'a', 'h'}, {'b', 'h'}, {'b', 'd'}, {'b', 'c'}, {'c', 'd'}, {'d', 'i'}, {'d', 'f'}, {'d', 'e'}, {'e', 'f'}, {'f', 'i'}, {'f', 'h'}, {'f', 'g'}, {'g', 'h'}}};
 
     grafo_g euleriano = {
-        .vertices = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', '\0'},
-        .aristas = {"ab", "ah", "bc", "bj", "bh", "cj", "cd", "ce", "dj", "di", "de", "ej", "ei", "ef", "eg", "fi", "fh", "fg", "gi", "gh", "hi", "hj", "ij", '\0'}};
+        .vertices = "abcdefghij",
+        .aristas = {{'a', 'b'}, {'a', 'h'}, {'b', 'c'}, {'b', 'j'}, {'b', 'h'}, {'c', 'j'}, {'c', 'd'}, {'c', 'e'}, {'d', 'j'}, {'d', 'i'}, {'d', 'e'}, {'e', 'j'}, {'e', 'i'}, {'e', 'f'}, {'e', 'g'}, {'f', 'i'}, {'f', 'h'}, {'f', 'g'}, {'g', 'i'}, {'g', 'h'}, {'h', 'i'}, {'h', 'j'}, {'i', 'j'}}};
 
     // Formato para separar las palabras del comando a ingresar
 
@@ -47,6 +48,9 @@ int main(int argc, char const *argv[])
         if (i >= 256)
             break;
     }
+
+    printf("ola");
+    printf("vertice %c, y arista (%c,%c)", arbol.vertices[0], arbol.aristas[2][0], arbol.aristas[2][1]);
 
     return 0;
 }
