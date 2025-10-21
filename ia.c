@@ -12,6 +12,11 @@ int char_to_index(char c)
 }
 char index_to_char(int i)
 {
+
+int char_to_index(char c) {
+    return tolower((unsigned char)c) - 'a';
+}
+char index_to_char(int i) {
     return (char)('a' + i);
 }
 
