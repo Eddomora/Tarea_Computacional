@@ -6,7 +6,7 @@
 #define MAX_VERT 50
 #define MAX_ARISTAS 100
 #define TAM_ARISTA 2
-#define MAX 26
+#define MAX 12
 #define INFINITO 9999999
 
 struct grafo
@@ -16,6 +16,94 @@ struct grafo
 };
 
 typedef struct grafo grafo_g;
+
+int char_to_index(char c)
+{
+    return tolower((unsigned char)c) - 'a';
+}
+char index_to_char(int i)
+{
+    return (char)('a' + i);
+}
+
+void dijkstra(int n, int nodo_inicio, int nodo_final)
+{
+    int G[MAX][MAX], dist[MAX], pred[MAX], visitado[MAX];
+
+    // 1. Inicialización
+    for (int i = 0; i < n; ++i)
+    {
+        dist[i] = INFINITO;
+        pred[i] = -1;
+        visitado[i] = 0;
+    }
+    dist[nodo_inicio] = 0;
+
+    // 2. Bucle principal de Dijkstra
+    for (int step = 0; step < n; ++step)
+    {
+        int u = -1;
+        int best = INFINITO;
+        for (int i = 0; i < n; ++i)
+        {
+            if (!visitado[i] && dist[i] < best)
+            {
+                best = dist[i];
+                u = i;
+            }
+        }
+
+        if (u == -1)
+            break; // No quedan nodos alcanzables
+
+        visitado[u] = 1;
+        if (u == nodo_final)
+            break; // Corte temprano: alcanzamos el destino
+
+        for (int v = 0; v < n; ++v)
+        {
+            // Verificamos si hay una arista (peso > 0) y si el destino no ha sido visitado
+            if (!visitado[v] && G[u][v] != 0)
+            {
+                int w = G[u][v];
+                if (dist[u] + w < dist[v])
+                {
+                    dist[v] = dist[u] + w;
+                    pred[v] = u;
+                }
+            }
+        }
+    }
+
+    // 3. Resultado y reconstrucción del camino
+    if (dist[nodo_final] >= INFINITO / 2) // Usar INFINITO/2 para evitar desbordamiento
+    {
+        printf("\nNo existe un camino entre '%c' y '%c'.\n", index_to_char(nodo_inicio), index_to_char(nodo_final));
+        return;
+    }
+
+    // reconstruir camino
+    int path[MAX], len = 0;
+    for (int cur = nodo_final; cur != -1; cur = pred[cur])
+    {
+        path[len] = cur;
+        len++;
+        if (cur == nodo_inicio)
+            break;
+    }
+
+    printf("\nLa distancia mas corta de '%c' a '%c' es: %d\n", index_to_char(nodo_inicio), index_to_char(nodo_final), dist[nodo_final]);
+
+    printf("El camino es: ");
+
+    for (int i = len - 1; i >= 0; --i)
+    {
+        printf("%c", path[i]);
+        if (i)
+            printf(" -> ");
+    }
+    printf("\n");
+}
 
 int main(int argc, char const *argv[])
 {
@@ -52,26 +140,29 @@ int main(int argc, char const *argv[])
                 break;
         }
 
-        if (strcmp(tolower(palabras[0]), "exit") == 0)
+        if (strcasecmp(palabras[0], "exit") == 0)
         {
             break;
         }
 
-        if (len(palabras) != 4)
+        if (strlen(*palabras) != 4)
         {
             printf("Error, comando mal escrito");
             continue;
             ;
         }
 
-        if (strcmp(palabras[3], "planar") == 0)
+        if (strcasecmp(palabras[3], "planar") == 0)
         {
+            dijkstra(strlen(planar.vertices), char_to_index(*palabras[1]), char_to_index(*palabras[2]));
         }
-        else if (strcmp(palabras[3], "arbol") == 0)
+        else if (strcasecmp(palabras[3], "arbol") == 0)
         {
+            dijkstra(strlen(arbol.vertices), char_to_index(*palabras[1]), char_to_index(*palabras[2]));
         }
-        else if (strcmp(palabras[3], "euleriano") == 0)
+        else if (strcasecmp(palabras[3], "euleriano") == 0)
         {
+            dijkstra(strlen(euleriano.vertices), char_to_index(*palabras[1]), char_to_index(*palabras[2]));
         }
         else
         {
@@ -83,92 +174,4 @@ int main(int argc, char const *argv[])
     }
 
     return 0;
-}
-
-int char_to_index(char c)
-{
-    return tolower((unsigned char)c) - 'a';
-}
-char index_to_char(int i)
-{
-    return (char)('a' + i);
-}
-
-void dijkstra(int n, int vert_inicio, int vert_final)
-{
-    int G[MAX][MAX], dist[MAX], pred[MAX], visitado[MAX];
-
-    // 1. Inicialización
-    for (int i = 0; i < n; ++i)
-    {
-        dist[i] = INFINITO;
-        pred[i] = -1;
-        visitado[i] = 0;
-    }
-    dist[vert_inicio] = 0;
-
-    // 2. Bucle principal de Dijkstra
-    for (int step = 0; step < n; ++step)
-    {
-        int u = -1;
-        int best = INFINITO;
-        for (int i = 0; i < n; ++i)
-        {
-            if (!visitado[i] && dist[i] < best)
-            {
-                best = dist[i];
-                u = i;
-            }
-        }
-
-        if (u == -1)
-            break; // No quedan nodos alcanzables
-
-        visitado[u] = 1;
-        if (u == vert_final)
-            break; // Corte temprano: alcanzamos el destino
-
-        for (int v = 0; v < n; ++v)
-        {
-            // Verificamos si hay una arista (peso > 0) y si el destino no ha sido visitado
-            if (!visitado[v] && G[u][v] != 0)
-            {
-                int w = G[u][v];
-                if (dist[u] + w < dist[v])
-                {
-                    dist[v] = dist[u] + w;
-                    pred[v] = u;
-                }
-            }
-        }
-    }
-
-    // 3. Resultado y reconstrucción del camino
-    if (dist[vert_final] >= INFINITO / 2) // Usar INFINITO/2 para evitar desbordamiento
-    {
-        printf("\nNo existe un camino entre '%c' y '%c'.\n", index_to_char(vert_inicio), index_to_char(vert_final));
-        return;
-    }
-
-    // reconstruir camino
-    int path[MAX], len = 0;
-    for (int cur = vert_final; cur != -1; cur = pred[cur])
-    {
-        path[len] = cur;
-        len++;
-        if (cur == vert_inicio)
-            break;
-    }
-
-    printf("\nLa distancia mas corta de '%c' a '%c' es: %d\n", index_to_char(vert_inicio), index_to_char(vert_final), dist[vert_final]);
-
-    printf("El camino es: ");
-
-    for (int i = len - 1; i >= 0; --i)
-    {
-        printf("%c", path[i]);
-        if (i)
-            printf(" -> ");
-    }
-    printf("\n");
 }
