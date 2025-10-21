@@ -78,3 +78,23 @@ void dijkstra(int G_escogido[MAX][MAX], int n, int nodo_inicio, int nodo_final)
     }
     printf("\n");
 }
+
+void orientacion1(int g_adyacencia[MAX][MAX], struct grafo graf)
+{
+    /*En desarrollo*/
+}
+
+void orientacion2(int g_adyacencia[MAX][MAX], struct grafo graf)
+{
+    /*En desarrollo*/
+}
+
+void orientacion3(int g_adyacencia[MAX][MAX], struct grafo graf)
+{
+    /*En desarrollo*/
+}
+
+void orientacion4(int g_adyacencia[MAX][MAX], struct grafo graf)
+{
+    /*En desarrollo*/
+}
