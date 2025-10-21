@@ -49,7 +49,6 @@ int main(int argc, char const *argv[])
             break;
     }
 
-    printf("ola");
     printf("vertice %c, y arista (%c,%c)", arbol.vertices[0], arbol.aristas[2][0], arbol.aristas[2][1]);
 
     return 0;
