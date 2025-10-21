@@ -1,5 +1,5 @@
 #include "utilidades.h"
-#include "dijkstra.h"
+#include "caminos.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,8 +9,6 @@ typedef struct grafo grafo_g;
 
 int main(int argc, char const *argv[])
 {
-
-    // esta parte puede que sea mejor agregarla con un .h
     grafo_g arbol = {
         .vertices = "abcdefghijkl",
         .aristas = {{'a', 'b'}, {'a', 'c'}, {'b', 'd'}, {'d', 'h'}, {'d', 'i'}, {'c', 'e'}, {'c', 'f'}, {'c', 'g'}, {'g', 'l'}, {'f', 'j'}, {'f', 'k'}}};
@@ -122,7 +120,7 @@ int main(int argc, char const *argv[])
             pritnf("Grafo con la orientacion 4\n");
             orientacion4(G, euleriano);
             dijkstra(G, strlen(euleriano.vertices), char_a_index(*palabras[1]), char_a_index(*palabras[2]));
-                }
+        }
         else
         {
             printf("Grafo no encontrado intente nuevamente\n");

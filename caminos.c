@@ -1,4 +1,4 @@
-#include "dijkstra.h"
+#include "caminos.h"
 
 void dijkstra(int G_escogido[MAX][MAX], int n, int nodo_inicio, int nodo_final)
 {
