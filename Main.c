@@ -6,7 +6,7 @@
 #define MAX_VERT 50
 #define MAX_ARISTAS 100
 #define TAM_ARISTA 2
-#define MAX 12
+#define MAX 26
 #define INFINITO 9999999
 
 struct grafo
@@ -17,18 +17,18 @@ struct grafo
 
 typedef struct grafo grafo_g;
 
-int char_to_index(char c)
+int char_a_index(char c)
 {
     return tolower((unsigned char)c) - 'a';
 }
-char index_to_char(int i)
+char index_a_char(int i)
 {
     return (char)('a' + i);
 }
 
-void dijkstra(int n, int nodo_inicio, int nodo_final)
+void dijkstra(int G_escogido[MAX][MAX], int n, int nodo_inicio, int nodo_final)
 {
-    int G[MAX][MAX], dist[MAX], pred[MAX], visitado[MAX];
+    int dist[MAX], pred[MAX], visitado[MAX];
 
     // 1. Inicialización
     for (int i = 0; i < n; ++i)
@@ -63,9 +63,9 @@ void dijkstra(int n, int nodo_inicio, int nodo_final)
         for (int v = 0; v < n; ++v)
         {
             // Verificamos si hay una arista (peso > 0) y si el destino no ha sido visitado
-            if (!visitado[v] && G[u][v] != 0)
+            if (!visitado[v] && G_escogido[u][v] != 0)
             {
-                int w = G[u][v];
+                int w = G_escogido[u][v];
                 if (dist[u] + w < dist[v])
                 {
                     dist[v] = dist[u] + w;
@@ -78,7 +78,7 @@ void dijkstra(int n, int nodo_inicio, int nodo_final)
     // 3. Resultado y reconstrucción del camino
     if (dist[nodo_final] >= INFINITO / 2) // Usar INFINITO/2 para evitar desbordamiento
     {
-        printf("\nNo existe un camino entre '%c' y '%c'.\n", index_to_char(nodo_inicio), index_to_char(nodo_final));
+        printf("\nNo existe un camino entre '%c' y '%c'.\n", index_a_char(nodo_inicio), index_a_char(nodo_final));
         return;
     }
 
@@ -92,17 +92,27 @@ void dijkstra(int n, int nodo_inicio, int nodo_final)
             break;
     }
 
-    printf("\nLa distancia mas corta de '%c' a '%c' es: %d\n", index_to_char(nodo_inicio), index_to_char(nodo_final), dist[nodo_final]);
+    printf("\nLa distancia mas corta de '%c' a '%c' es: %d\n", index_a_char(nodo_inicio), index_a_char(nodo_final), dist[nodo_final]);
 
     printf("El camino es: ");
 
     for (int i = len - 1; i >= 0; --i)
     {
-        printf("%c", path[i]);
+        printf("%c", index_a_char(path[i]));
         if (i)
             printf(" -> ");
     }
     printf("\n");
+}
+
+void creacion_grafico(int g_adyacencia[MAX][MAX], struct grafo graf)
+{
+    for (int i = 0; i < 11; ++i)
+    {
+        int u = char_a_index(graf.aristas[i][0]);
+        int v = char_a_index(graf.aristas[i][1]);
+        g_adyacencia[u][v] = g_adyacencia[v][u] = 1;
+    }
 }
 
 int main(int argc, char const *argv[])
@@ -147,30 +157,33 @@ int main(int argc, char const *argv[])
 
         if (strlen(*palabras) != 4)
         {
-            printf("Error, comando mal escrito");
+            printf("Error, comando mal escrito\n");
             continue;
             ;
         }
 
+        int G[MAX][MAX];
+        memset(G, 0, sizeof(int) * MAX * MAX);
         if (strcasecmp(palabras[3], "planar") == 0)
         {
-            dijkstra(strlen(planar.vertices), char_to_index(*palabras[1]), char_to_index(*palabras[2]));
+            creacion_grafico(G, planar);
+            dijkstra(G, strlen(planar.vertices), char_a_index(*palabras[1]), char_a_index(*palabras[2]));
         }
         else if (strcasecmp(palabras[3], "arbol") == 0)
         {
-            dijkstra(strlen(arbol.vertices), char_to_index(*palabras[1]), char_to_index(*palabras[2]));
+            creacion_grafico(G, arbol);
+            dijkstra(G, strlen(arbol.vertices), char_a_index(*palabras[1]), char_a_index(*palabras[2]));
         }
         else if (strcasecmp(palabras[3], "euleriano") == 0)
         {
-            dijkstra(strlen(euleriano.vertices), char_to_index(*palabras[1]), char_to_index(*palabras[2]));
+            creacion_grafico(G, euleriano);
+            dijkstra(G, strlen(euleriano.vertices), char_a_index(*palabras[1]), char_a_index(*palabras[2]));
         }
         else
         {
-            printf("Grafo no encontrado intente nuevamente");
+            printf("Grafo no encontrado intente nuevamente\n");
             continue;
         }
-
-        printf("vertice %c, y arista (%c,%c)", arbol.vertices[0], arbol.aristas[2][0], arbol.aristas[2][1]);
     }
 
     return 0;
