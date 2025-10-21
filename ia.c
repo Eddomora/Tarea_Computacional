@@ -6,11 +6,11 @@
 #define INFINITY 999999999
 
 // ---------- Utilidades letra <-> índice ----------
-int char_to_index(char c)
+int char_a_index(char c)
 {
     return tolower((unsigned char)c) - 'a';
 }
-char index_to_char(int i)
+char index_a_char(int i)
 {
     return (char)('a' + i);
 }
@@ -136,7 +136,7 @@ void dijkstra(int G[MAX][MAX], int n, int start_node, int end_node)
     if (dist[end_node] >= INFINITY / 2)
     {
         printf("\nNo existe un camino entre '%c' y '%c'.\n",
-               index_to_char(start_node), index_to_char(end_node));
+               index_a_char(start_node), index_a_char(end_node));
         return;
     }
 
@@ -150,11 +150,11 @@ void dijkstra(int G[MAX][MAX], int n, int start_node, int end_node)
     }
 
     printf("\nLa distancia mas corta de '%c' a '%c' es: %d\n",
-           index_to_char(start_node), index_to_char(end_node), dist[end_node]);
+           index_a_char(start_node), index_a_char(end_node), dist[end_node]);
     printf("El camino es: ");
     for (int i = len - 1; i >= 0; --i)
     {
-        printf("%c", index_to_char(path[i]));
+        printf("%c", index_a_char(path[i]));
         if (i)
             printf(" -> ");
     }
@@ -175,8 +175,8 @@ int main(void)
         {'a', 'b'}, {'a', 'c'}, {'b', 'd'}, {'d', 'h'}, {'d', 'i'}, {'c', 'e'}, {'c', 'f'}, {'c', 'g'}, {'g', 'l'}, {'f', 'j'}, {'f', 'k'}};
     for (int i = 0; i < 11; ++i)
     {
-        int u = char_to_index(tree_edges[i][0]);
-        int v = char_to_index(tree_edges[i][1]);
+        int u = char_a_index(tree_edges[i][0]);
+        int v = char_a_index(tree_edges[i][1]);
         graph_tree[u][v] = graph_tree[v][u] = 1;
     }
 
@@ -186,8 +186,8 @@ int main(void)
         {'a', 'b'}, {'a', 'h'}, {'b', 'h'}, {'b', 'd'}, {'b', 'c'}, {'c', 'd'}, {'d', 'i'}, {'d', 'f'}, {'d', 'e'}, {'e', 'f'}, {'f', 'i'}, {'f', 'h'}, {'f', 'g'}, {'g', 'h'}};
     for (int i = 0; i < 14; ++i)
     {
-        int u = char_to_index(planar_edges[i][0]);
-        int v = char_to_index(planar_edges[i][1]);
+        int u = char_a_index(planar_edges[i][0]);
+        int v = char_a_index(planar_edges[i][1]);
         graph_planar[u][v] = graph_planar[v][u] = 1;
     }
 
@@ -197,8 +197,8 @@ int main(void)
         {'a', 'b'}, {'a', 'h'}, {'b', 'c'}, {'b', 'j'}, {'b', 'h'}, {'c', 'j'}, {'c', 'd'}, {'c', 'e'}, {'d', 'j'}, {'d', 'i'}, {'d', 'e'}, {'e', 'j'}, {'e', 'i'}, {'e', 'f'}, {'e', 'g'}, {'f', 'i'}, {'f', 'h'}, {'f', 'g'}, {'g', 'i'}, {'g', 'h'}, {'h', 'i'}, {'h', 'j'}, {'i', 'j'}};
     for (int i = 0; i < 23; ++i)
     {
-        int u = char_to_index(eulerian_edges[i][0]);
-        int v = char_to_index(eulerian_edges[i][1]);
+        int u = char_a_index(eulerian_edges[i][0]);
+        int v = char_a_index(eulerian_edges[i][1]);
         graph_eulerian[u][v] = graph_eulerian[v][u] = 1;
     }
 
@@ -258,8 +258,8 @@ int main(void)
     printf("Ingrese el vertice final: ");
     scanf(" %c", &end_char);
 
-    start_node = char_to_index(start_char);
-    end_node = char_to_index(end_char);
+    start_node = char_a_index(start_char);
+    end_node = char_a_index(end_char);
 
     if (start_node < 0 || start_node >= num_vertices ||
         end_node < 0 || end_node >= num_vertices)
@@ -270,7 +270,7 @@ int main(void)
 
     printf("\nEjecutando Dijkstra en grafo %s con %d vertices. Origen=%c, Destino=%c\n",
            directed ? "DIRIGIDO" : "NO DIRIGIDO",
-           num_vertices, index_to_char(start_node), index_to_char(end_node));
+           num_vertices, index_a_char(start_node), index_a_char(end_node));
 
     dijkstra(working_graph, num_vertices, start_node, end_node);
     return 0;
