@@ -1,12 +1,12 @@
 def orientacion1(grafo, inicio, fin):
-    visitado = {v: False for v in grafo} #ir guardando los vertices ya visitados. asi no se repiten. False: no visitado, True:visitado
-    previo = {v: None for v in grafo} #guarda del vertice que vienes, asi se va construyendo el camino 
+    visitado = {v: False for v in grafo} 
+    previo = {v: None for v in grafo}  
 
     cola = [inicio]
     visitado[inicio] = True
 
     while cola:
-        u = cola.pop() #popleft: elimina y devuelve el primer elemento (el que entro primero(izquierda)).
+        u = cola.pop() 
         if u == fin:
             break
         for v in grafo[u]:
@@ -39,5 +39,6 @@ def orientacion1(grafo, inicio, fin):
     for u in orientado:
         for v in orientado[u]:
             print(f"{u} → {v}")
+
 
     return orientado 
