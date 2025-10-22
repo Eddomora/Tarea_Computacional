@@ -52,7 +52,7 @@ void dijkstra(int G_escogido[MAX][MAX], int n, int nodo_inicio, int nodo_final)
     // 3. Resultado y reconstrucción del camino
     if (dist[nodo_final] >= INFINITO / 2) // Usar INFINITO/2 para evitar desbordamiento
     {
-        printf("\nNo existe un camino entre '%c' y '%c'.\n", index_a_char(nodo_inicio), index_a_char(nodo_final));
+        printf("No existe un camino entre '%c' y '%c'.\n\n", index_a_char(nodo_inicio), index_a_char(nodo_final));
         return;
     }
 
@@ -66,25 +66,22 @@ void dijkstra(int G_escogido[MAX][MAX], int n, int nodo_inicio, int nodo_final)
             break;
     }
 
-    printf("\nLa distancia mas corta de '%c' a '%c' es: %d\n", index_a_char(nodo_inicio), index_a_char(nodo_final), dist[nodo_final]);
-
     printf("El camino es: ");
 
     for (int i = len - 1; i >= 0; --i)
     {
         printf("%c", index_a_char(path[i]));
         if (i)
-            printf(" -> ");
+            printf(", ");
     }
-    printf("\n");
+    printf("\n\n");
 }
-
 
 static void crear_orientacion(int g_adyacencia[MAX][MAX], struct grafo graf, int modo)
 {
     for (int i = 0; i < MAX_ARISTAS; ++i)
     {
-        // Si el primer char es nulo, significa que llegamos al final 
+        // Si el primer char es nulo, significa que llegamos al final
         // de las aristas definidas en la inicialización del struct.
         if (graf.aristas[i][0] == '\0')
         {
@@ -113,7 +110,7 @@ static void crear_orientacion(int g_adyacencia[MAX][MAX], struct grafo graf, int
             to = lo;
             break;
 
-        case 3: // PARIDAD DE LA SUMA
+        case 3:                     // PARIDAD DE LA SUMA
             if ((lo + hi) % 2 == 0) // Si (lo + hi) es par
             {
                 from = lo;
@@ -126,7 +123,7 @@ static void crear_orientacion(int g_adyacencia[MAX][MAX], struct grafo graf, int
             }
             break;
 
-        case 4: // PARIDAD DEL MENOR
+        case 4:              // PARIDAD DEL MENOR
             if (lo % 2 == 0) // Si lo es par
             {
                 from = lo;
@@ -138,14 +135,14 @@ static void crear_orientacion(int g_adyacencia[MAX][MAX], struct grafo graf, int
                 to = lo;
             }
             break;
-        
+
         default: // Modo por defecto (ascendente)
             from = lo;
             to = hi;
             break;
         }
 
-        //el peso 1 a la arista dirigida
+        // el peso 1 a la arista dirigida
         g_adyacencia[from][to] = 1;
     }
 }
@@ -159,7 +156,6 @@ void orientacion2(int g_adyacencia[MAX][MAX], struct grafo graf)
 {
     crear_orientacion(g_adyacencia, graf, 2);
 }
-
 
 void orientacion3(int g_adyacencia[MAX][MAX], struct grafo graf)
 {
