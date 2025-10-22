@@ -138,7 +138,7 @@ int main(int argc, char const *argv[])
         }
         else
         {
-            printf("\nGrafo no encontrado intente nuevamente\n");
+            printf("\nError, intente nuevamente\n");
             continue;
         }
     }
