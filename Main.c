@@ -57,7 +57,7 @@ int main(int argc, char const *argv[])
         memset(G, 0, sizeof(int) * MAX * MAX);
         if (strcasecmp(palabras[3], "planar") == 0 && verificar(*palabras[1], planar) && verificar(*palabras[2], planar))
         {
-            printf("- Grafo sin orientacion\n");
+            printf("\n- Grafo sin orientacion\n");
             creacion_grafico(G, planar);
             dijkstra(G, strlen(planar.vertices), char_a_index(*palabras[1]), char_a_index(*palabras[2]));
             memset(G, 0, sizeof(int) * MAX * MAX);
@@ -80,6 +80,8 @@ int main(int argc, char const *argv[])
             printf("- Grafo con la orientacion 4\n");
             orientacion4(G, planar);
             dijkstra(G, strlen(planar.vertices), char_a_index(*palabras[1]), char_a_index(*palabras[2]));
+
+            return 0;
         }
         else if (strcasecmp(palabras[3], "arbol") == 0 && verificar(*palabras[1], arbol) && verificar(*palabras[2], arbol))
         {
@@ -106,6 +108,8 @@ int main(int argc, char const *argv[])
             printf("- Grafo con la orientacion 4\n");
             orientacion4(G, arbol);
             dijkstra(G, strlen(arbol.vertices), char_a_index(*palabras[1]), char_a_index(*palabras[2]));
+
+            return 0;
         }
         else if (strcasecmp(palabras[3], "euleriano") == 0 && verificar(*palabras[1], euleriano) && verificar(*palabras[2], euleriano))
         {
@@ -132,6 +136,8 @@ int main(int argc, char const *argv[])
             printf("- Grafo con la orientacion 4\n");
             orientacion4(G, euleriano);
             dijkstra(G, strlen(euleriano.vertices), char_a_index(*palabras[1]), char_a_index(*palabras[2]));
+
+            return 0;
         }
         else
         {

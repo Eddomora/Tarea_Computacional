@@ -52,7 +52,7 @@ void dijkstra(int G_escogido[MAX][MAX], int n, int nodo_inicio, int nodo_final)
     // 3. Resultado y reconstrucción del camino
     if (dist[nodo_final] >= INFINITO / 2) // Usar INFINITO/2 para evitar desbordamiento
     {
-        printf("\nNo existe un camino entre '%c' y '%c'.\n", index_a_char(nodo_inicio), index_a_char(nodo_final));
+        printf("   No existe un camino entre '%c' y '%c'.\n", index_a_char(nodo_inicio), index_a_char(nodo_final));
         return;
     }
 
