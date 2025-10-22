@@ -11,7 +11,7 @@ char index_a_char(int i)
 
 void creacion_grafico(int g_adyacencia[MAX][MAX], struct grafo graf)
 {
-    for (int i = 0; i < 11; ++i)
+    for (int i = 0; i < MAX_ARISTAS; ++i)
     {
         int u = char_a_index(graf.aristas[i][0]);
         int v = char_a_index(graf.aristas[i][1]);
