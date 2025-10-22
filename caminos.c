@@ -66,15 +66,13 @@ void dijkstra(int G_escogido[MAX][MAX], int n, int nodo_inicio, int nodo_final)
             break;
     }
 
-    printf("\nLa distancia mas corta de '%c' a '%c' es: %d\n", index_a_char(nodo_inicio), index_a_char(nodo_final), dist[nodo_final]);
-
-    printf("El camino es: ");
+    printf("   El camino es: ");
 
     for (int i = len - 1; i >= 0; --i)
     {
         printf("%c", index_a_char(path[i]));
         if (i)
-            printf(" -> ");
+            printf(", ");
     }
     printf("\n");
 }
